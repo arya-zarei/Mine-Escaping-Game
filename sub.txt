@@ -1,0 +1,95 @@
+
+	
+		//mine
+		MapCell current = null;
+		for(int index = 0; index < 4; index++) //for loop to find next cell from 0-3 index
+		{	 
+			current = cell.getNeighbour(index); //current cell object  for each index
+			if (current != null && !current.isLava() && !current.isWall() && !current.isMarked())
+				{ //if current is not lava, or not a wall, or is not marked
+					if(current.isExit())
+					{
+						return current; /**@return current is it is the exit **/
+					}
+					
+					else if(current.isGoldCell() || current.isKeyCell())
+					{
+						return current; /**@return current if it is a key or gold**/
+					}
+					
+					else if(current.isFloor())
+					{
+						return current; /**return current if it is floor **/
+					}
+					
+					else if(current.isLockCell()) //if current is a locked door
+					{	//if current is a colour and that colour has atleast one key
+						if(current.isRed() && numKeys[0] > 0 || current.isGreen() && numKeys[1] > 0 || current.isBlue() && numKeys[2] > 0) 
+						{
+							return current; /** @return the door cell **/
+						}
+					}
+				}
+			}			
+		}
+		return null; /** if nothing is returned from for loop @return empty (no next cell) **/
+		
+		--------------------------
+		
+		MapCell current = null; //current MapCell object
+		
+		for (int i = 0; i < 4; i++) //traverse through for loop for all 4 index
+		{
+			current = cell.getNeighbour(i); //get current for specific index
+				
+			if (current != null && !current.isWall() && !current.isMarked() && !current.isLava()) 
+			{ //check is current is not, not a wall, not marked and not lava
+				if (current.isExit()) //if current is an exit block
+				{
+					return current; /**@return current exit**/
+				}
+			}
+		}
+		
+		for (int i = 0; i < 4; i++)
+		{
+			current = cell.getNeighbour(i);
+			
+			if (current != null && !current.isWall() && !current.isMarked() && !current.isLava())
+			{
+				if (current.isKeyCell() || current.isGoldCell()) //if current is a key cell or gold cell
+				{
+					return current;
+				}
+			}
+		}
+		
+		for (int i = 0; i < 4; i++)
+		{
+			current = cell.getNeighbour(i);
+			
+			if (current != null && !current.isWall() && !current.isMarked() && !current.isLava())
+			{
+				if (current.isFloor()) //if current is a floor cell
+				{
+					return current;
+				}
+			}
+		}
+		
+		for (int i = 0; i < 4; i++)
+		{
+			current = cell.getNeighbour(i);
+			if (current != null && !current.isWall() && !current.isMarked() && !current.isLava())
+			{
+				if (current.isLockCell()) //if current is a lock cell
+				{
+						
+					if ((current.isRed() && numKeys[0] != 0) || (current.isGreen() && numKeys[1] != 0) || (current.isBlue() && numKeys[2] != 0))
+					{//check all 3 door colors to find the correct door color and then check if a key of that color exists
+						return current;
+					}
+				}
+			}
+		}
+		return null; /**@return null if nothing above has been return, meaning there is no next cell**/
